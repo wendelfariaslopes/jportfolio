@@ -31,6 +31,7 @@ public class AnalysisTest {
 		for (Portfolio p: list) {
 			System.out.print(p);
 		}
+		
 		System.out.println("RiskMin = "+pMinRisk);
 		
 
