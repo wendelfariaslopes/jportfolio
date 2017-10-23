@@ -16,16 +16,27 @@ public class Analysis {
 		//Portfolio return is the proportion-weighted combination of the constituent assets' returns
 		//This method calculated different weighted combination for each portfolio to obtain the best value
 		public static List<Portfolio> generateCombinationPortfolios(int tests,double[] ...assets){
-			DecimalFormat df = new DecimalFormat("00.0");
+			DecimalFormat df = new DecimalFormat("00.00");
+			
+			// for all possibible portfolio there are one list of average returns OK TEST
+			double[] listAverageReturns = averageReturnsList(assets);
+			//System.out.println(Arrays.toString(listAverageReturns));
 			
 			double[][] cov = covarianceMatrix(assets);
 			Matrix covMatrix = new Matrix(cov);
 
-			
-			// number of possibilities that we will create and assets
+			// number of possibilities that we will create and assets OK TEST
 			List<Double[]> listWeights = MonteCarlo.allocationList(tests, assets);
-			// for all possibible portfolio there are one list of average returns
-			double[] listAverageReturns = averageReturnsList(assets);
+//			for (Double[] doubles : listWeights) {
+//				double s = 0.0;
+//				for (Double d : doubles) {
+//					s=s+d;
+//					System.out.print(df.format(d*100)+"% ");
+//				}
+//				System.out.print(df.format(s*100)+"% ");
+//				System.out.println();
+//				
+//			}
 			
 			List<Portfolio> lp = new ArrayList<Portfolio>(); // list of possible portfolios
 			
@@ -72,6 +83,7 @@ public class Analysis {
 		int i = 0;
 		for (double[] a : assets) {
 			arm[i] = average(returnList(a));
+			i++;
 		}
 		return arm;
 	}
@@ -106,7 +118,7 @@ public class Analysis {
 		double[][] m = new double[l][l];
 		for (int i=0; i < l;i++) {
 			for (int j=0; j < l;j++) {
-				m[i][j]=covariance(var[i],var[j]);
+				m[i][j]=covariance(returnList(var[i]),returnList(var[j]));
 			}
 		}
 		return m;

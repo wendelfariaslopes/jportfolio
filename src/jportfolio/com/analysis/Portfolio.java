@@ -54,7 +54,7 @@ public class Portfolio{
 		for (String m : key) {
 			s+=m+" ";
 		}
-		s = s +" "+ df2.format(returnValue*100) +" " +df2.format(riskValue)+"\n";
+		s = s +" E(r): "+ df2.format(returnValue*100) +" Risk(std): " +df2.format(Math.sqrt(riskValue)*100)+"\n";
 		
 	return s;	
 	}
