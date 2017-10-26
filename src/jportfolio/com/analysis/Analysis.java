@@ -11,10 +11,9 @@ import Jama.Matrix;
 
 public class Analysis {
 		
-	
 		// return spectrum tests (also called the return tradeoff)
-		//Portfolio return is the proportion-weighted combination of the constituent assets' returns
-		//This method calculated different weighted combination for each portfolio to obtain the best value
+		// Portfolio return is the proportion-weighted combination of the constituent assets' returns
+		// This method calculated different weighted combination for each portfolio to obtain the best value
 		public static List<Portfolio> generateCombinationPortfolios(int tests,double[] ...assets){
 			DecimalFormat df = new DecimalFormat("00.00");
 			
