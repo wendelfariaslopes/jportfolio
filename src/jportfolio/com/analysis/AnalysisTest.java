@@ -14,14 +14,14 @@ public class AnalysisTest {
 
 	public static void main(String[] args) {
 
-		Analysis a = new Analysis();
+
 
 		double[] pA = {33.12, 34.89, 34.35, 34.29, 34.02, 34.64, 33.97, 34.08, 34.30, 33.26, 30.28, 31.60};
 		double[] pB = {38.98, 39.21, 33.96, 33.42, 31.54, 29.40, 30.67, 27.19, 25.49, 25.96, 26.01, 22.99};
 		double[] pC = {38.18, 39.11, 37.16, 39.25, 39.64, 29.70, 49.77, 49.89, 40.49, 30.96, 40.01, 41.09};
 		double[] pD = {38.18, 39.11, 33.16, 33.12, 31.14, 29.40, 30.67, 37.19, 35.49, 37.96, 36.01, 32.99};
-		double[] pE = {38.18, 39.11, 33.16, 33.12, 31.14, 29.40, 30.67, 37.19, 35.49, 37.96, 36.01, 32.99};
-		double[] pF = {38.18, 39.11, 33.16, 33.12, 31.14, 29.40, 30.67, 37.19, 35.49, 37.96, 36.01, 32.99};
+		double[] pE = {38.18, 39.11, 33.16, 33.12, 31.14, 29.40, 30.67, 37.19, 35.49, 37.96, 36.01, 34.09};
+		double[] pF = {38.18, 39.11, 39.16, 42.12, 44.14, 49.40, 41.67, 47.19, 49.49, 44.96, 45.01, 46.99};
 		
 		//List<Portfolio> list = a.generateCombinationPortfolios(10000,pA,pB,pC);
 		
@@ -31,9 +31,10 @@ public class AnalysisTest {
 		assets.add(new Asset("", "Asset C", pC));
 		assets.add(new Asset("", "Asset D", pD));
 		assets.add(new Asset("", "Asset E", pE));
+		assets.add(new Asset("", "Asset F", pF));
 		
 		
-		List<Portfolio> list = a.generateCombinationPortfolios(100000, assets);
+		List<Portfolio> list = Analysis.generateCombinationPortfolios(1000000, assets);
 		
 		List<Portfolio> listTop = new ArrayList<Portfolio>();
 		

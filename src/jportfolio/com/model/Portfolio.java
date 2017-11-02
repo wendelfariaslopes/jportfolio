@@ -49,7 +49,7 @@ public class Portfolio{
 	
 	@Override
 	public String toString(){
-		DecimalFormat df2 = new DecimalFormat("00.00");
+		DecimalFormat df2 = new DecimalFormat("0.00");
 		String s = "";
 		
 		this.allocation = MapUtil.sortByValueDesc(this.allocation);
@@ -58,9 +58,17 @@ public class Portfolio{
 		for (String m : key) {
 			s+=m+" ";
 		}
-		s = s +" E(r): "+ df2.format(returnValue*100) +" Risk(std): " +df2.format(Math.sqrt(riskValue)*100)+"\n";
+		double er = roundAvoid(returnValue*100, 2);
+		double risk = roundAvoid(Math.sqrt(riskValue)*100, 2);
+		
+		s = s +" E(r): "+ df2.format(er) +" Risk: " +df2.format(risk)+"\n";
 		
 	return s;	
+	}
+	
+	public static double roundAvoid(double value, int places) {
+	    double scale = Math.pow(10, places);
+	    return Math.round(value * scale) / scale;
 	}
 	
 
