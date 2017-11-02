@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import Jama.Matrix;
+import jportfolio.com.model.Asset;
+import jportfolio.com.model.Portfolio;
 
 public class Analysis {
 		
@@ -20,6 +22,7 @@ public class Analysis {
 			// for all possibible portfolio there are one list of average returns OK TEST
 			double[] listAverageReturns = averageReturnsList(assets);
 			//System.out.println(Arrays.toString(listAverageReturns));
+			
 			
 			double[][] cov = covarianceMatrix(assets);
 			Matrix covMatrix = new Matrix(cov);
@@ -41,7 +44,7 @@ public class Analysis {
 			
 			for (Double[] weight : listWeights) {
 
-				double er = expectedReturn(listAverageReturns, weight);
+				double er = expectedReturnPortfolio(listAverageReturns, weight);
 				
 				Matrix weightM = new Matrix(convert(weight),1);
 				Matrix weightMT= weightM.transpose();
@@ -61,11 +64,49 @@ public class Analysis {
 			}
 			return lp;
 		}
+		
+				// return spectrum tests (also called the return tradeoff)
+				// Portfolio return is the proportion-weighted combination of the constituent assets' returns
+				// This method calculated different weighted combination for each portfolio to obtain the best value
+				public static List<Portfolio> generateCombinationPortfolios(int tests,List<Asset> assets){
+					DecimalFormat df = new DecimalFormat("00.00");
+					
+					double[][] cov = covarianceMatrix(assets);
+					Matrix covMatrix = new Matrix(cov);
+
+					// number of possibilities that we will create and assets OK TEST
+					List<Double[]> listWeights = MonteCarlo.allocationList(tests, assets.size());
+
+					
+					List<Portfolio> lp = new ArrayList<Portfolio>(); // list of possible portfolios
+					
+					for (Double[] weight : listWeights) {
+
+						double er = expectedReturnPortfolio(assets, weight);
+						
+						Matrix weightM = new Matrix(convert(weight),1);
+						Matrix weightMT= weightM.transpose();
+						
+						Matrix minRisk1 = weightM.times(covMatrix.times(weightMT));
+						double risk = minRisk1.get(0, 0);
+						Map<String,Double> map = new HashMap<String,Double>();
+
+						//System.out.println(Arrays.toString(weight));
+						int k =0;
+						for (Double w : weight) {
+							map.put(assets.get(k).getSymbols()+" "+df.format(w*100)+"%",w);
+							k++;
+						}
+						Portfolio p = new Portfolio(map,risk,er);
+						lp.add(p);
+					}
+					return lp;
+				}
 	
 	
 	
 	//Expected return:
-	public static double expectedReturn(double[] averageReturnList, Double[] weight){
+	public static double expectedReturnPortfolio(double[] averageReturnList, Double[] weight){
 
 		//Fundamental Equation maximization of return in portfolio
 		double maxReturn= 0.0;
@@ -75,6 +116,17 @@ public class Analysis {
 		return maxReturn;
 	}
 	
+	//Expected return:
+		public static double expectedReturnPortfolio(List<Asset> averageReturnList, Double[] weight){
+
+			//Fundamental Equation maximization of return in portfolio
+			double maxReturn= 0.0;
+			for (int i=0; i < averageReturnList.size(); i++) {
+				maxReturn+= averageReturnList.get(i).getExpectedReturn()*weight[i]; //double maxReturn = m1*w1 + m2*w2 + m3*w3 + m4*w4 + ...;
+			}
+			return maxReturn;
+		}
+		
 	
 	//list of the average returns of each asset.
 	private static double[] averageReturnsList(double[]...assets){
@@ -118,6 +170,17 @@ public class Analysis {
 		for (int i=0; i < l;i++) {
 			for (int j=0; j < l;j++) {
 				m[i][j]=covariance(returnList(var[i]),returnList(var[j]));
+			}
+		}
+		return m;
+	}
+	
+	private static double[][] covarianceMatrix(List<Asset> assets){
+		int l = assets.size();
+		double[][] m = new double[l][l];
+		for (int i=0; i < l;i++) {
+			for (int j=0; j < l;j++) {
+				m[i][j]=covariance(returnList(assets.get(i).getPrice()),returnList(assets.get(j).getPrice()));
 			}
 		}
 		return m;

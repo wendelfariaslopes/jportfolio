@@ -1,8 +1,10 @@
-package jportfolio.com.analysis;
+package jportfolio.com.model;
 
 import java.text.DecimalFormat;
 import java.util.Map;
 import java.util.Set;
+
+import jportfolio.com.tool.MapUtil;
 
 public class Portfolio{
 	
@@ -49,6 +51,8 @@ public class Portfolio{
 	public String toString(){
 		DecimalFormat df2 = new DecimalFormat("00.00");
 		String s = "";
+		
+		this.allocation = MapUtil.sortByValueDesc(this.allocation);
 		
 		Set<String> key = allocation.keySet();
 		for (String m : key) {
