@@ -14,8 +14,6 @@ public class AnalysisTest {
 
 	public static void main(String[] args) {
 
-
-
 		double[] pA = {33.12, 34.89, 34.35, 34.29, 34.02, 34.64, 33.97, 34.08, 34.30, 33.26, 30.28, 31.60};
 		double[] pB = {38.98, 39.21, 33.96, 33.42, 31.54, 29.40, 30.67, 27.19, 25.49, 25.96, 26.01, 22.99};
 		double[] pC = {38.18, 39.11, 37.16, 39.25, 39.64, 29.70, 49.77, 49.89, 40.49, 30.96, 40.01, 41.09};
@@ -33,11 +31,9 @@ public class AnalysisTest {
 		assets.add(new Asset("", "Asset E", pE));
 		assets.add(new Asset("", "Asset F", pF));
 		
-		
 		List<Portfolio> list = Analysis.generateCombinationPortfolios(1000000, assets);
 		
 		List<Portfolio> listTop = new ArrayList<Portfolio>();
-		
 		
 		for(int i=0; i< 20; i++){
 			Portfolio pMinRisk = list
@@ -52,15 +48,13 @@ public class AnalysisTest {
 //			      .stream()
 //			      .min(Comparator.comparing(Portfolio::getRiskValue))
 //			      .orElseThrow(NoSuchElementException::new);
-		
-		
+			
 		for (Portfolio p: listTop) {
 			System.out.print(p);
 		}
 		
 		//System.out.println("RiskMin = "+pMinRisk);
 		
-
 	}
 
 }
