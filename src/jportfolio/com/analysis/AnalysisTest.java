@@ -19,7 +19,7 @@ public class AnalysisTest {
 		double[] pC = {38.18, 39.11, 37.16, 39.25, 39.64, 29.70, 49.77, 49.89, 40.49, 30.96, 40.01, 41.09};
 		double[] pD = {38.18, 39.11, 33.16, 33.12, 31.14, 29.40, 30.67, 37.19, 35.49, 37.96, 36.01, 32.99};
 		double[] pE = {38.18, 39.11, 33.16, 33.12, 31.14, 29.40, 30.67, 37.19, 35.49, 37.96, 36.01, 34.09};
-		double[] pF = {38.18, 39.11, 39.16, 42.12, 44.14, 49.40, 41.67, 47.19, 49.49, 44.96, 45.01, 46.99};
+		double[] pF = {18.18, 19.11, 29.16, 32.12, 34.14, 39.40, 51.67, 47.19, 49.49, 52.96, 55.01, 56.99};
 		
 		//List<Portfolio> list = a.generateCombinationPortfolios(10000,pA,pB,pC);
 		
@@ -31,16 +31,17 @@ public class AnalysisTest {
 		assets.add(new Asset("", "Asset E", pE));
 		assets.add(new Asset("", "Asset F", pF));
 		
-		List<Portfolio> list = Analysis.generateCombinationPortfolios(1000000, assets);
+		List<Portfolio> list = Analysis.generateCombinationPortfolios(100000, assets);
 		
-		List<Portfolio> listTop = new ArrayList<Portfolio>();
+		List<Portfolio> listMinimalRisk = new ArrayList<Portfolio>();
 		
-		for(int i=0; i< 20; i++){
+		for(int i=0; i < 100; i++){
 			Portfolio pMinRisk = list
 				      .stream()
 				      .min(Comparator.comparing(Portfolio::getRiskValue))
 				      .orElseThrow(NoSuchElementException::new);
-			listTop.add(pMinRisk);
+			
+			listMinimalRisk.add(pMinRisk);
 			list.remove(pMinRisk);
 		}
 		
@@ -49,7 +50,27 @@ public class AnalysisTest {
 //			      .min(Comparator.comparing(Portfolio::getRiskValue))
 //			      .orElseThrow(NoSuchElementException::new);
 			
-		for (Portfolio p: listTop) {
+		for (Portfolio p: listMinimalRisk) {
+			System.out.print(p);
+		}
+		
+		// Minimal Risk and Maximal Return = MinMax
+		List<Portfolio> listMinMax = new ArrayList<Portfolio>();
+		
+		for(int i=0; i < 20; i++){
+			Portfolio pMinMax = listMinimalRisk
+				      .stream()
+				      .max(Comparator.comparing(Portfolio::getReturnValue))
+				      .orElseThrow(NoSuchElementException::new);
+			
+			listMinMax.add(pMinMax);
+			listMinimalRisk.remove(pMinMax);
+		}
+		
+		System.out.println();
+		System.out.println("Min Max List");
+		
+		for (Portfolio p: listMinMax) {
 			System.out.print(p);
 		}
 		
