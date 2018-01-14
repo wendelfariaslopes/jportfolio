@@ -4,11 +4,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * The Hungarian algorithm consists of the four steps below. The first two steps
@@ -50,7 +54,14 @@ public class Hugarian {
 
 		int[][] matrix1 = { { 26, 35, 74, 20 }, { 26, 36, 72, 22 }, { 35, 53, 80, 40 }, { 38, 48, 81, 41 } };
 		
-		int[][] matrix = { { 50,45,44 }, { 44,50,45}, { 45,47,43 }};
+		int[][] matrix = { {40,	54,	93,	76,	64,	93},
+				{61,	23,	32,	24,	23,	41},
+				{27,	68,	95,	60,	15,	51},
+				{85,	47,	38,	88,	87,	54},
+				{82,	86,	31,	37,	49,	96},
+				{80,	95,	87,	23,	9,	34},
+
+};
 		
 
 		printMatrix(matrix);
@@ -207,8 +218,55 @@ public class Hugarian {
 	 */
 	private static List<Cell> step5(int[][] matrix){
 		List<Cell> list = new ArrayList<>();
-		System.out.println("Step 5: Create additional zeros Find the smallest element");
+		System.out.println("Step 5: Print Matrix");
 		printMatrix(matrix);
+		
+		//Cell[][] m = new Cell[2][2];
+		Map<String,Integer> unsortMapLines = new HashMap<>();
+		
+		//Map<String,Integer> unsortMapLines = new HashMap<>();
+		
+		int length = matrix.length;
+		
+
+		for (int i = 0; i < length; i++) {
+			int lines = 0;
+			String s = "";
+			for (int j = 0; j < length; j++) {
+				if(matrix[i][j] == 0){
+					//s += "X"+i+""+j+" ";
+					s += "X"+j+" ";
+					System.out.print(s);
+					lines++;
+				}
+			}
+			unsortMapLines.put(s, lines);
+			//System.out.print(lines);
+			System.out.println();
+		}
+		System.out.println();
+
+
+		Map<String, Integer> sortedMap = sortByValue(unsortMapLines);
+		for (String k : sortedMap.keySet()) {
+			String[] elimination = k.split(" ");
+			System.out.println(k+" "+sortedMap.get(k)+" "+elimination.length );
+			
+			for(int e=0; e < elimination.length;e++){
+				if(k.contains(elimination[e])){
+					System.out.println("Contain "+ elimination[e]);
+					for (String s : sortedMap.keySet()) {
+						
+					}
+				}
+			}
+			
+		}
+		
+	
+		
+		
+		
 		
 		return list;
 	}
@@ -509,6 +567,38 @@ public class Hugarian {
 		}
 		return lines;
 	}
+	
+	 private static Map<String, Integer> sortByValue(Map<String, Integer> unsortMap) {
+
+	        // 1. Convert Map to List of Map
+	        List<Map.Entry<String, Integer>> list =
+	                new LinkedList<Map.Entry<String, Integer>>(unsortMap.entrySet());
+
+	        // 2. Sort list with Collections.sort(), provide a custom Comparator
+	        //    Try switch the o1 o2 position for a different order
+	        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+	            public int compare(Map.Entry<String, Integer> o1,
+	                               Map.Entry<String, Integer> o2) {
+	                return (o1.getValue()).compareTo(o2.getValue());
+	            }
+	        });
+
+	        // 3. Loop the sorted list and put it into a new insertion order Map LinkedHashMap
+	        Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+	        for (Map.Entry<String, Integer> entry : list) {
+	            sortedMap.put(entry.getKey(), entry.getValue());
+	        }
+
+	        /*
+	        //classic iterator example
+	        for (Iterator<Map.Entry<String, Integer>> it = list.iterator(); it.hasNext(); ) {
+	            Map.Entry<String, Integer> entry = it.next();
+	            sortedMap.put(entry.getKey(), entry.getValue());
+	        }*/
+
+
+	        return sortedMap;
+	    }
 
 }
 
