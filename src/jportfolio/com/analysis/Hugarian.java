@@ -54,11 +54,12 @@ public class Hugarian {
 		 * System.out.print(person.getMap().get(k)+", "); }
 		 * System.out.println(); }
 		 */
-
-		int[][] matrix = new int [17][17];
+		
+		//Random matrix for tests
+		int[][] matrix = new int [15][15];
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
-				int d = randInt(1,100);
+				int d = randInt(1,500);
 				matrix[i][j] = d;
 			}
 		}
@@ -193,7 +194,7 @@ public class Hugarian {
 		//System.out.println("Step 5: Finished");
 		printMatrix(matrix);
 	
-		//Cell[][] m = new Cell[2][2];
+		
 		Map<String,Integer> unsortMapLines = new HashMap<>();
 		
 		//Map<String,Integer> unsortMapLines = new HashMap<>();
@@ -204,33 +205,52 @@ public class Hugarian {
 			int lines = 0;
 			String s = "";
 			for (int j = 0; j < length; j++) {
-				if(matrix[i][j] == 0){
-					//s += "X["+i+","+j+"] ";
-					s += "Column["+j+"] ";
-					//System.out.print(s);
-					lines++;
-				}else{
+//				if(matrix[i][j] == 0){
+//					//s += "X["+i+","+j+"] ";
+//					s += "Column["+j+"] ";
+//					//System.out.print("X["+i+""+j+"] ");
+//					lines++;
+//				}else{
+//					original[i][j]=0;
+//					
+//				}
+//				
+				if(matrix[i][j] != 0){
 					original[i][j]=0;
 				}
 			}
-			unsortMapLines.put(s, lines);
+			//unsortMapLines.put(s, lines);
 			//System.out.print(lines);
 			//System.out.println();
 		}
-		//System.out.println();
+		System.out.println();
 		
 		printMatrix(original);
 		
-		Map<String, Integer> sortedMap = sortByValue(unsortMapLines);
+		for (int i = 0; i < length; i++) {
+			for (int j = 0; j < length; j++) {
+				if(original[i][j] != 0){
+					for(int k = i+1; k < length;k++ ){
+						original[k][j] = 0;
+					}
+				}
+			}	
+		}
+		printOtimizationSum(original);
+		printMatrix(original);
+		
+		
+		
+//		Map<String, Integer> sortedMap = sortByValue(unsortMapLines);
 //		for (String k : sortedMap.keySet()) {
 //			System.out.println(k+" "+sortedMap.get(k));
 //		}
 
 		//System.out.println();
-		Map<String, Integer> choiceMap = new HashMap<>();
-		List<String> listElimination = new ArrayList<>();
+//		Map<String, Integer> choiceMap = new HashMap<>();
+//		List<String> listElimination = new ArrayList<>();
 		//Map<String, Integer> sortedMap = sortByValue(unsortMapLines);
-		for (String k : sortedMap.keySet()) {
+/*		for (String k : sortedMap.keySet()) {
 			String[] elimination = k.split(" ");
 			//System.out.println(k+" "+sortedMap.get(k)+" "+elimination.length );
 			
@@ -275,7 +295,7 @@ public class Hugarian {
 			//System.out.println(k+" "+choiceMap.get(k));
 			System.out.print(k+"  "+choiceMap.get(k)+" ");
 		}
-
+*/
 		return list;
 	}
 
@@ -402,6 +422,8 @@ public class Hugarian {
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < length; j++) {
 				if(matrix[i][j]<10){
+					System.out.print(matrix[i][j] + "    ");
+				}else if(matrix[i][j]>10 && matrix[i][j] < 100){
 					System.out.print(matrix[i][j] + "   ");
 				}else{
 					System.out.print(matrix[i][j] + "  ");
@@ -410,6 +432,21 @@ public class Hugarian {
 			}
 			System.out.println();
 		}
+		System.out.println();
+	}
+	
+	public static void printOtimizationSum(int[][] matrix) {
+		int length = matrix.length;
+		int sum = 0;
+		for (int i = 0; i < length; i++) {
+			for (int j = 0; j < length; j++) {
+				if(matrix[i][j]!=0){
+					sum+=matrix[i][j];
+					System.out.print("X["+i+""+j+"]="+matrix[i][j]+" ");
+				}
+			}
+		}
+		System.out.println(" Sum = "+sum);
 		System.out.println();
 	}
 
@@ -435,40 +472,6 @@ public class Hugarian {
 		}
 	}
 
-	private static class Cell{
-		
-		int i;
-		int j;
-		int value;
-		String info;
-	
-		public int getI() {
-			return i;
-		}
-		public void setI(int i) {
-			this.i = i;
-		}
-		public int getJ() {
-			return j;
-		}
-		public void setJ(int j) {
-			this.j = j;
-		}
-		public int getValue() {
-			return value;
-		}
-		public void setValue(int value) {
-			this.value = value;
-		}
-		public String getInfo() {
-			return info;
-		}
-		public void setInfo(String info) {
-			this.info = info;
-		}
-		
-	}
-	
 	private static boolean isZero(int[] array) {
 		for (int e : array) {
 			if (e != 0) {
@@ -654,4 +657,38 @@ class Person {
 		this.map = map;
 	}
 
+}
+
+class Cell{
+	
+	int i;
+	int j;
+	int value;
+	String info;
+
+	public int getI() {
+		return i;
+	}
+	public void setI(int i) {
+		this.i = i;
+	}
+	public int getJ() {
+		return j;
+	}
+	public void setJ(int j) {
+		this.j = j;
+	}
+	public int getValue() {
+		return value;
+	}
+	public void setValue(int value) {
+		this.value = value;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	
 }
