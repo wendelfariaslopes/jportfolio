@@ -25,10 +25,13 @@ import java.util.TreeMap;
  */
 
 public class Hugarian {
+	
+	private static int[][] original = null;
 
 	enum LineType {
 		NONE, HORIZONTAL, VERTICAL
 	}
+	
 
 	public static void main(String[] args) {
 		/*
@@ -52,64 +55,33 @@ public class Hugarian {
 		 * System.out.println(); }
 		 */
 
-		int[][] matrix1 = { { 26, 35, 74, 20 }, { 26, 36, 72, 22 }, { 35, 53, 80, 40 }, { 38, 48, 81, 41 } };
+		int[][] matrix = new int [17][17];
+		for (int i = 0; i < matrix.length; i++) {
+			for (int j = 0; j < matrix.length; j++) {
+				int d = randInt(1,100);
+				matrix[i][j] = d;
+			}
+		}
 		
-		int[][] matrix = { {40,	54,	93,	76,	64,	93},
-				{61,	23,	32,	24,	23,	41},
-				{27,	68,	95,	60,	15,	51},
-				{85,	47,	38,	88,	87,	54},
-				{82,	86,	31,	37,	49,	96},
-				{80,	95,	87,	23,	9,	34},
+		// Calc Best Allocation
+		calcAllocation(matrix);
 
-};
+	}
+	
+	public static void calcAllocation(int[][] m){
 		
-
-		printMatrix(matrix);
+		original = copy(m);
+		
+		printMatrix(m);
 		//STEP 1
-		//int[][] min = findMin(matrix);
-		//int[][] m = minus(matrix, min);
-		//List<Line> minLines = getMinLines(m);
-		//System.out.printf("Min num of lines for example matrix is: %d\n", minLines.size());
-		//printMatrix(matrix);
-		//printMatrix(min);
-		//printMatrix(m);
-		//STEP 1
-		int[][] matrixStep1 = step1(matrix);
-		printMatrix(matrixStep1);
-		
-		//STEP 2
-//		int[][] t = transpose(m);
-//		int[][] minCol = findMin(t);
-//		int[][] minusCol = minus(t, minCol);
-//		int[][] normal = transpose(minusCol);
-//		minLines = getMinLines(normal);
-//		System.out.printf("Min num of lines for example matrix is: %d\n", minLines.size());
-//		printMatrix(normal);
-		
+		int[][] matrixStep1 = step1(m);
+		//printMatrix(matrixStep1);
 		//STEP 2
 		int[][] matrixStep2 = step2(matrixStep1);
-		printMatrix(matrixStep2);
-		
-		
+		//printMatrix(matrixStep2);
 		//STEP 3
 		step3(matrixStep2);
 		
-
-
-		// createMark(m, minLines);
-
-//		System.out.println();
-		
-//		int[][] memory = copy(normal);
-//
-//		List<Line> minls = getMinLines(normal);
-//		System.out.printf("Min num of lines for example matrix is: %d\n", minls.size());
-//
-//		createMark(normal, minls);
-//		printMatrix(memory);
-//		printMatrix(normal);
-//		System.out.println(getMinMatrix(normal));
-
 	}
 
 	/**
@@ -120,7 +92,7 @@ public class Hugarian {
 	 * @return
 	 */
 	private static int[][] step1(int[][] matrix) {
-		System.out.println("Step 1: Subtract row minima");
+		//System.out.println("Step 1: Subtract row minima");
 		int[][] min = findMin(matrix,LineType.HORIZONTAL);
 		return minus(matrix, min);
 	}
@@ -133,7 +105,7 @@ public class Hugarian {
 	 * @return
 	 */
 	private static int[][] step2(int[][] matrix) {
-		System.out.println("Step 2: Subtract column minima");
+		//System.out.println("Step 2: Subtract column minima");
 		int[][] minV = findMin(matrix,LineType.VERTICAL);
 		return minus(matrix, minV);
 	}
@@ -149,17 +121,17 @@ public class Hugarian {
 	 * @return
 	 */
 	private static void step3(int[][] matrix) {
-		System.out.println("Step 3: Cover all zeros with a minimum number of lines");
+		//System.out.println("Step 3: Cover all zeros with a minimum number of lines");
 		
 		int ciclos = 1;
 		int[][] memoryMatrix = copy(matrix);
-		System.out.println("Print memoryMatrix   ");
-		printMatrix(memoryMatrix);
+		//System.out.println("Print memoryMatrix   ");
+		//printMatrix(memoryMatrix);
 		
 		List<Line> lines = getMinLines(memoryMatrix);
 		
 		int numberLines = lines.size();
-		System.out.printf("Min num of lines for example matrix is: %d\n", numberLines);
+		//System.out.printf("Min num of lines for example matrix is: %d\n", numberLines);
 		
 		if(numberLines < matrix.length){
 			int[][] matrixMarked = createMark(matrix, getMinLines(matrix));
@@ -185,7 +157,7 @@ public class Hugarian {
 	 */
 	private static void step4(int[][] matrix, int[][] matrixMarked, List<Line> lines, int k,int ciclos) {
 		
-		System.out.println(ciclos +" Step 4: Create additional zeros Find the smallest element");
+		//System.out.println(ciclos +" Step 4: Create additional zeros Find the smallest element");
 		final int SIZE = matrix.length;
 		
 		//Subtract k from all uncovered elements
@@ -218,9 +190,9 @@ public class Hugarian {
 	 */
 	private static List<Cell> step5(int[][] matrix){
 		List<Cell> list = new ArrayList<>();
-		System.out.println("Step 5: Print Matrix");
+		//System.out.println("Step 5: Finished");
 		printMatrix(matrix);
-		
+	
 		//Cell[][] m = new Cell[2][2];
 		Map<String,Integer> unsortMapLines = new HashMap<>();
 		
@@ -228,46 +200,82 @@ public class Hugarian {
 		
 		int length = matrix.length;
 		
-
 		for (int i = 0; i < length; i++) {
 			int lines = 0;
 			String s = "";
 			for (int j = 0; j < length; j++) {
 				if(matrix[i][j] == 0){
-					//s += "X"+i+""+j+" ";
-					s += "X"+j+" ";
-					System.out.print(s);
+					//s += "X["+i+","+j+"] ";
+					s += "Column["+j+"] ";
+					//System.out.print(s);
 					lines++;
+				}else{
+					original[i][j]=0;
 				}
 			}
 			unsortMapLines.put(s, lines);
 			//System.out.print(lines);
-			System.out.println();
+			//System.out.println();
 		}
-		System.out.println();
-
-
+		//System.out.println();
+		
+		printMatrix(original);
+		
 		Map<String, Integer> sortedMap = sortByValue(unsortMapLines);
+//		for (String k : sortedMap.keySet()) {
+//			System.out.println(k+" "+sortedMap.get(k));
+//		}
+
+		//System.out.println();
+		Map<String, Integer> choiceMap = new HashMap<>();
+		List<String> listElimination = new ArrayList<>();
+		//Map<String, Integer> sortedMap = sortByValue(unsortMapLines);
 		for (String k : sortedMap.keySet()) {
 			String[] elimination = k.split(" ");
-			System.out.println(k+" "+sortedMap.get(k)+" "+elimination.length );
+			//System.out.println(k+" "+sortedMap.get(k)+" "+elimination.length );
 			
 			for(int e=0; e < elimination.length;e++){
-				if(k.contains(elimination[e])){
-					System.out.println("Contain "+ elimination[e]);
-					for (String s : sortedMap.keySet()) {
-						
-					}
+				if(k.contains(elimination[e]) && sortedMap.get(k) > 1){
+					//System.out.println("Contain "+ elimination[e]);
+					choiceMap.put(elimination[e].trim(), sortedMap.get(k));
 				}
 			}
 			
+			//delete all elements more than 2
+			if(sortedMap.get(k) > 1){
+				listElimination.add(k);
+			}
+
 		}
+
 		
-	
+		choiceMap = sortByValue(choiceMap);
 		
+//		System.out.println();
+//		for (String k : sortedMap.keySet()) {
+//			System.out.println(k+" "+sortedMap.get(k));
+//		}	
 		
-		
-		
+		//System.out.println();
+		//System.out.println("Map a retirar");
+		for (String k : listElimination) {
+			//System.out.println(k+" "+sortedMap.get(k));
+			sortedMap.remove(k);
+		}	
+		//System.out.println();
+		//System.out.println("Map limpo e a ser depositado");
+		for (String k : sortedMap.keySet()) {
+			//System.out.println(k+" "+sortedMap.get(k));
+			choiceMap.put(k.trim(),sortedMap.get(k));
+		}	
+		choiceMap = sortByValue(choiceMap);
+		//System.out.println();
+		System.out.println("Map Escolhido");
+		for (String k : choiceMap.keySet()) {
+			//System.out.println(k+" "+choiceMap.get(k));
+			System.out.print(k+"  "+choiceMap.get(k)+" ");
+		}
+
 		return list;
 	}
 
@@ -393,7 +401,12 @@ public class Hugarian {
 
 		for (int i = 0; i < length; i++) {
 			for (int j = 0; j < length; j++) {
-				System.out.print(matrix[i][j] + " ");
+				if(matrix[i][j]<10){
+					System.out.print(matrix[i][j] + "   ");
+				}else{
+					System.out.print(matrix[i][j] + "  ");
+				}
+				
 			}
 			System.out.println();
 		}

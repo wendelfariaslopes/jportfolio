@@ -10,28 +10,20 @@ public class Combination {
 		
 		//pascalTriangle(10);
 		
-		int day = 24 * 60 * 60;
-		System.out.println(day);
+		//int day = 24 * 60 * 60;
+		//System.out.println(day);
 		
-		System.out.println(binomial(30, 15));
-		int time = binomial(30,15).intValue() /day;
-		System.out.println(time);
-		
+		//System.out.println(binomial(30, 15));
+		//int time = binomial(30,15).intValue() /day;
+		//System.out.println(time);
 		
 		ArrayList<String> set = new ArrayList<>();
-		set.add("Asset 1");
-		set.add("Asset 2");
-		set.add("Asset 3");
-		set.add("Asset 1");
-		set.add("Asset 2");
-		set.add("Asset 3");
-		set.add("Asset 1");
-		set.add("Asset 2");
-		set.add("Asset 3");
+		set.add("X[1]");
+		set.add("X[2]");
+		set.add("X[3]");
+		set.add("X[4]");
 
-	
 
-		
 		ArrayList<ArrayList<String>> list = new ArrayList<>();
 		
 		int numberSet = set.size();
