@@ -56,7 +56,7 @@ public class Hugarian {
 		 */
 		
 		//Random matrix for tests
-		int[][] matrix = new int [15][15];
+		int[][] matrix = new int [18][18];
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
 				int d = randInt(1,500);
@@ -65,7 +65,11 @@ public class Hugarian {
 		}
 		
 		// Calc Best Allocation
+		long start = System.currentTimeMillis();
 		calcAllocation(matrix);
+		long finished = System.currentTimeMillis();
+		
+		System.out.println("Tempo de execucao = "+ (finished - start));
 
 	}
 	
