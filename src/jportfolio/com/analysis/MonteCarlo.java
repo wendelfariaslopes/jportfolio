@@ -3,7 +3,9 @@ package jportfolio.com.analysis;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MonteCarlo {
 
@@ -76,7 +78,7 @@ public class MonteCarlo {
 	
 	
 	// Distribuidor de alocacoes Monte Carlo
-		public static List<Double[]> allocationList(int samples, int length){
+	public static List<Double[]> allocationList(int samples, int length){
 					
 			Double[] a = new Double[length];
 			Double [] finalSum = new Double[length];
@@ -184,6 +186,45 @@ public class MonteCarlo {
 	private static double random(double min, double max) {
 		double diff = max - min;
 		return min + Math.random() * diff;
+	}
+	
+	public static Map<String,Double> distributionWithRange(Map<String,Double[]> asset) {
+		Map<String,Double> dist = new HashMap<>();
+		
+		for(String key:asset.keySet()) {
+			
+			double min = asset.get(key)[0];
+			double max = asset.get(key)[1];
+
+			System.out.println(key+" : "+min+" <-> "+max);
+			System.out.println(random(min,max));
+			dist.put(key, random(min,max));
+			
+		}
+		
+		return dist; 
+	}
+	
+	public static void main(String []args) {
+		
+		Map<String,Double[]> assets = new HashMap<>();
+		
+		Double[] d = new Double[2];
+		d[0] = 0.1;
+		d[1] = 0.3;
+		assets.put("Tesla", d);
+		
+		Double[] d2 = new Double[2];
+		d2[0] = 0.3;
+		d2[1] = 0.5;
+		assets.put("Google", d2);
+		
+		Double[] d3 = new Double[2];
+		d3[0] = 0.3;
+		d3[1] = 0.5;
+		assets.put("Apple", d3);
+		
+		distributionWithRange(assets);
 	}
 
 }

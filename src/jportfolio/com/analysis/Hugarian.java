@@ -56,7 +56,7 @@ public class Hugarian {
 		 */
 		
 		//Random matrix for tests
-		int[][] matrix = new int [18][18];
+		int[][] matrix = new int [10][10];
 		for (int i = 0; i < matrix.length; i++) {
 			for (int j = 0; j < matrix.length; j++) {
 				int d = randInt(1,500);

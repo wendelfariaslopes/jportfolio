@@ -40,16 +40,12 @@ public class MarkovChain {
 		long startT=0,endT = 0;
 		
 		startT = System.currentTimeMillis();
-		if(allPositive(m)){
-			System.out.println("Eh regular");
-		}else{
-			System.out.println("Irregular");
-		}
+		
 		endT = System.currentTimeMillis();
 		System.out.printf("Time Matrix Double: %.5g%n" ,(double) (endT-startT)/1000);
 		
 	
-		String matrix = Arrays.deepToString(m);
+		//String matrix = Arrays.deepToString(m);
 
 	    double[][] mCopy = new double[rows][cols];
 	    
@@ -61,9 +57,31 @@ public class MarkovChain {
 	    
 	    m[99][999] = -1;
 	    
-	    System.out.println(m[99][999]);
-	    System.out.println(mCopy[99][999]);
-	  
+	    System.out.println("Number in [99][999] ORIGINAL = "+m[99][999]);
+	    System.out.println("Number in [99][999] COPY = "+mCopy[99][999]);
+	    
+	    if(allPositive(m)){
+			System.out.println("ORIGINAL Eh regular");
+		}else{
+			System.out.println("ORIGINAL Irregular");
+		}
+	    if(allPositive(mCopy)){
+			System.out.println("COPY Eh regular");
+		}else{
+			System.out.println("COPY Irregular");
+		}
+	    
+	    int cyclos = 3; // 
+	    
+	    for (int i = 0; i < cyclos; i++) {
+			m = multiple(m, m);
+			  if(allPositive(m)){
+					System.out.println(i+" ORIGINAL Eh regular");
+					break;
+				}else{
+					System.out.println(i+" ORIGINAL Irregular");
+				}
+		}
 		
 		startT = System.currentTimeMillis();
 

@@ -1,12 +1,25 @@
 package jportfolio.com.Combination;
 
+import java.io.IOException;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
+
+import jportfolio.com.analysis.Analysis;
+import jportfolio.com.analysis.AnalysisTest;
+import jportfolio.com.model.Asset;
+import jportfolio.com.model.Portfolio;
+import yahoofinance.Stock;
+import yahoofinance.YahooFinance;
+import yahoofinance.histquotes.HistoricalQuote;
+import yahoofinance.histquotes.Interval;
 
 public class Combination {
 	
-	public static void main(String [] args){
+	public static void main(String [] args) throws IOException{
 		
 		//pascalTriangle(10);
 		
@@ -17,30 +30,155 @@ public class Combination {
 		//int time = binomial(30,15).intValue() /day;
 		//System.out.println(time);
 		
+		double[] pA = {1,2,3,4,5,6,7,8,9,10};
+		
+		double[] pB = {1,3,4,4,5,6,5,6,9,11};
+		
+		double[] pC = {1.01, 1.10, 1.20, 1.40, 1.70, 1.90, 1.95, 2.05, 2.04, 2.06, 2.16, 2.37};
+		
+		double[] pD = {2.01, 2.210, 3.20, 3.40, 3.70, 1.90, 1.95, 2.05, 2.04, 2.26, 2.36, 2.07};
+
+		double[] pE = {1.01, 1.02, 1.02, 1.02, 1.04, 1.05, 1.04, 1.05,1.04, 1.06, 1.06, 1.07};
+		
+		//List<Portfolio> list = a.generateCombinationPortfolios(10000,pA,pB,pC);
+		
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//		
+//		Calendar from = Calendar.getInstance();
+//		Calendar to = Calendar.getInstance();
+//		from.add(Calendar.MONTH, -3); // from 1 year ago
+//		
+//		String[] symbols = new String[] {"INTC", "BABA", "TSLA", "AIR.PA", "YHOO","GOOG"};
+//		Map<String, Stock> stocks = YahooFinance.get(symbols); // single request
+//		Stock intel = stocks.get("INTC");
+//		Stock airbus = stocks.get("AIR.PA");
+//		Stock google = stocks.get("GOOG"); 
+//		Stock tesla = stocks.get("TSLA");
+//		//Stock google = YahooFinance.get("GOOG");
+//		List<HistoricalQuote> listIntel = intel.getHistory(from, to, Interval.DAILY);
+//		List<HistoricalQuote> listAirbus = airbus.getHistory(from, to, Interval.DAILY);
+//		List<HistoricalQuote> listGoogle = google.getHistory(from, to, Interval.DAILY);
+//		List<HistoricalQuote> listTesla = tesla.getHistory(from, to, Interval.DAILY);
+		
+
+		//Stock google2 = YahooFinance.get("GOOG");
+		//List<HistoricalQuote> googleHistQuotes = google2.getHistory();
+
+//		ArrayList<Asset> assets = new ArrayList<Asset>();
+//		double[] priceGoogle = new double[listGoogle.size()];
+//		double[] priceIntel = new double[listIntel.size()];
+//		double[] priceTesla = new double[listTesla.size()];
+//		
+//		for (int i=0;i<listGoogle.size();i++) {
+//			if(sdf.format(listGoogle.get(i).getDate().getTime()).equals(sdf.format(listIntel.get(i).getDate().getTime()))) {
+//
+//				//System.out.println(sdf.format(listGoogle.get(i).getDate().getTime())+" : "+listGoogle.get(i).getClose()+" - "+listIntel.get(i).getClose());
+//				priceGoogle[i]=listGoogle.get(i).getClose().doubleValue();
+//				priceTesla[i]=listTesla.get(i).getClose().doubleValue();
+//				priceIntel[i]=listIntel.get(i).getClose().doubleValue();
+//			
+//			}
+//		}
+//		
+//		assets.add(new Asset("", "GOOGLE", priceGoogle));
+//		assets.add(new Asset("", "INTEL", priceIntel));
+//		assets.add(new Asset("", "TESLA", priceTesla));
+		
+		
+		ArrayList<Asset> assets = new ArrayList<Asset>();
+		assets.add(new Asset("", "Asset A", pA));
+		assets.add(new Asset("", "Asset B", pB));
+		assets.add(new Asset("", "Asset C", pC));
+		assets.add(new Asset("", "Asset D", pD));
+		assets.add(new Asset("", "Asset E", pE));
+//		assets.add(new Asset("", "Asset G", pG));
+//		assets.add(new Asset("", "Asset G1", pG1));
+//		assets.add(new Asset("", "Asset G2", pG2));
+//		assets.add(new Asset("", "Asset G3", pG3));
+//		assets.add(new Asset("", "Asset G4", pG4));
+//		assets.add(new Asset("", "Asset G5", pG5));
+//		assets.add(new Asset("", "Asset G6", pG6));
+//		assets.add(new Asset("", "Asset G7", pG7));
+//		assets.add(new Asset("", "Asset G8", pG8));/
+
+		/*
 		ArrayList<String> set = new ArrayList<>();
 		set.add("X[1]");
 		set.add("X[2]");
 		set.add("X[3]");
 		set.add("X[4]");
-
-
-		ArrayList<ArrayList<String>> list = new ArrayList<>();
+*/
+	//	ArrayList<ArrayList<String>> list = new ArrayList<>();
 		
-		int numberSet = set.size();
+		ArrayList<ArrayList<Asset>> list = new ArrayList<>();
+		
+	//	int numberSet = set.size();
+		
+		int numberSet = assets.size();
 		
 		System.out.println("For one set of "+numberSet);
 		for (int i = 1; i < numberSet+1; i++) {
-			list.addAll( getPermutations(set,i));
+			//list.addAll( getPermutations(set,i));
+
+			list.addAll(getPermutations(assets,i));
 			System.out.println("Grouped "+i+" to "+i+" possible number "+list.size());
 		}
 		System.out.println("Total of combination = "+list.size());
+			
+//
+//		for(ArrayList<String> element : list) {
+//		    System.out.println(element);
+//		}
 		
-	
+		List<Portfolio> combinedListMinMax = new ArrayList<>();
+		
+		for(ArrayList<Asset> element : list) {
+			int n = element.size();
+			//System.out.println("Assets number: "+ n);
+			if(n >= 2) {
 
-		for(ArrayList<String> element : list) {
-		    System.out.println(element);
+			    System.out.print("Group {");
+				for (Asset asset : element) {
+				    System.out.print(asset.getSymbols()+", ");
+//				    System.out.print(asset.getSymbols().replace("Asset", ""));
+				}
+			    System.out.print(" }");
+			    System.out.println();
+			 // Generate N random strategies by Monte Carlo Function 
+				List<Portfolio> listStrategies = Analysis.generateCombinationPortfolios(100000, element);
+				
+				List<Portfolio> listMinMax = AnalysisTest.getMinRiskMaxReturn(AnalysisTest.getMinimalRisk(listStrategies));
+				
+				//if the risk to High then HighRisk > 2.0 or the return LowReturn < 0.01 ignore combination assets
+
+				for (Portfolio p: listMinMax) {
+					System.out.print(p);
+					
+					double ret = roundAvoid(p.getReturnValue()*100, 3);
+					double risk = roundAvoid(Math.sqrt(p.getRiskValue())*100, 3);
+					System.out.print("Risk ="+risk+" Return ="+ ret);
+					
+					if(risk < 1.9  && ret >= 0.195) { 
+						combinedListMinMax.add(p);
+					} else {
+						System.out.print("Risk ="+risk+" Return ="+ ret);
+						System.out.println("*********** Ignored: "+p.getRiskValue());
+					}
+					System.out.println();
+				}
+				
+								
+			}
+		
 		}
-
+		System.out.println();
+		System.out.println("Best Distribution Portfolios Simulated");
+		System.out.println();
+		
+		List<Portfolio> finalListMinMax = AnalysisTest.getMinRiskMaxReturn(AnalysisTest.getMinimalRisk(combinedListMinMax));
+		for (Portfolio p: finalListMinMax) {
+			System.out.print(p);
+		}
  
 	}
 	
@@ -120,6 +258,12 @@ public class Combination {
 	                 .divide(BigInteger.valueOf(k+1));
 	    }
 	    return ret;
+	}
+	
+
+	public static double roundAvoid(double value, int places) {
+	    double scale = Math.pow(10, places);
+	    return Math.round(value * scale) / scale;
 	}
 
 
