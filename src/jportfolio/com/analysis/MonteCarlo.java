@@ -196,8 +196,10 @@ public class MonteCarlo {
 			double min = asset.get(key)[0];
 			double max = asset.get(key)[1];
 
-			System.out.println(key+" : "+min+" <-> "+max);
-			System.out.println(random(min,max));
+			System.out.println("Investment policy " +key);
+
+			System.out.println("Limit permet: Min = "+min+" <-> Max = "+max);
+			System.out.println(" "+random(min,max));
 			dist.put(key, random(min,max));
 			
 		}
@@ -210,7 +212,7 @@ public class MonteCarlo {
 		Map<String,Double[]> assets = new HashMap<>();
 		
 		Double[] d = new Double[2];
-		d[0] = 0.1;
+		d[0] = 0.1;   
 		d[1] = 0.3;
 		assets.put("Tesla", d);
 		

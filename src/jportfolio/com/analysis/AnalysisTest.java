@@ -92,12 +92,12 @@ public class AnalysisTest {
 		double[] pE = {33.12, 34.89, 34.35, 34.29, 34.02, 34.64, 33.97, 34.08, 34.30, 32.26, 30.28, 31.60,
 				33.12, 34.89, 34.35, 34.29, 34.02, 34.64, 33.97, 34.08, 34.30, 32.26, 30.28, 31.60};
 		
-		double[] pF = {38.98, 39.0, 39.10, 39.15, 39.19, 39.08, 39.05, 39.15, 39.14, 39.15, 37.28, 39.28,
-				38.98, 39.0, 39.10, 39.15, 39.19, 39.08, 39.05, 39.15, 39.14, 39.15, 38.28, 40.28};
+		double[] pF = {38.98, 39.0, 39.10, 49.15, 39.19, 39.08, 39.05, 39.15, 39.14, 39.15, 37.28, 39.28,
+				38.98, 39.0, 39.10, 39.15, 39.19, 49.08, 39.05, 39.15, 39.14, 39.15, 38.28, 40.28};
 		
 
-		double[] pG = {38.98, 38.96, 38.86, 38.81, 38.77, 38.87, 38.93, 39.15, 39.14, 39.15, 37.28, 39.28,
-				38.98, 39.0, 39.10, 39.15, 39.19, 39.08, 39.05, 39.15, 39.14, 39.15, 38.28, 40.28};
+		double[] pG = {38.98, 38.96, 38.86, 38.81, 39.77, 38.87, 38.93, 39.15, 39.14, 39.15, 37.28, 39.28,
+				38.98, 39.0, 39.10, 39.15, 39.19, 40.08, 39.05, 39.15, 39.14, 39.15, 38.28, 40.28};
 		
 		//List<Portfolio> list = a.generateCombinationPortfolios(10000,pA,pB,pC);
 		
@@ -110,8 +110,10 @@ public class AnalysisTest {
 		assets.add(new Asset("", "Asset E", pE));
 		assets.add(new Asset("", "Asset F", pF));
 		assets.add(new Asset("", "Asset G", pG));
+
+		assets.add(new Asset("", "Asset F-2", pF));
+		assets.add(new Asset("", "Asset G-2", pG));
 	
-		
 		// Generate N random strategies by Monte Carlo Function 
 		List<Portfolio> listStrategies = Analysis.generateCombinationPortfolios(10000, assets);
 //		
@@ -164,7 +166,7 @@ public class AnalysisTest {
 		
 		List<Portfolio> listMinimalRisk = new ArrayList<Portfolio>();
 		
-		for(int i=0; i < 20; i++){
+		for(int i=0; i < listStrategies.size(); i++){
 			Portfolio pMinRisk = listStrategies
 				      .stream()
 				      .min(Comparator.comparing(Portfolio::getRiskValue))
@@ -177,12 +179,14 @@ public class AnalysisTest {
 		return listMinimalRisk;
 	}
 	
+	
+	
 	public static List<Portfolio> getMinRiskMaxReturn(List<Portfolio> listMinimalRisk){
 		
 		// Minimal Risk and Maximal Return = MinMax
 				List<Portfolio> listMinMax = new ArrayList<Portfolio>();
 				
-				for(int i=0; i < 10; i++){
+				for(int i=0; i < listMinimalRisk.size(); i++){
 					Portfolio pMinMax = listMinimalRisk
 						      .stream()
 						      .max(Comparator.comparing(Portfolio::getReturnValue))

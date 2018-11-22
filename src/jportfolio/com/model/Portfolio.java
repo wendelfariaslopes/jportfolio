@@ -1,6 +1,7 @@
 package jportfolio.com.model;
 
 import java.text.DecimalFormat;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,6 +71,18 @@ public class Portfolio{
 	    double scale = Math.pow(10, places);
 	    return Math.round(value * scale) / scale;
 	}
+	
+	public static Comparator<Portfolio> byHigherReturnValue = new Comparator<Portfolio>() {
+		public int compare(Portfolio one, Portfolio two) {
+			return one.getReturnValue()>two.getReturnValue()?1:one.getReturnValue()<two.getReturnValue()?-1:0;
+		}
+	};
+	
+	public static Comparator<Portfolio> byLessRisk = new Comparator<Portfolio>() {
+		public int compare(Portfolio one, Portfolio two) {
+			return one.getRiskValue()<two.getRiskValue()?1:one.getRiskValue()>two.getRiskValue()?-1:0;
+		}
+	};
 	
 
 }
