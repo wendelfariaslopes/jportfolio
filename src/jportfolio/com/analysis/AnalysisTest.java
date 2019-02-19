@@ -107,15 +107,15 @@ public class AnalysisTest {
 		assets.add(new Asset("", "Asset B", pB));
 		assets.add(new Asset("", "Asset C", pC));
 		assets.add(new Asset("", "Asset D", pD));
-		assets.add(new Asset("", "Asset E", pE));
-		assets.add(new Asset("", "Asset F", pF));
-		assets.add(new Asset("", "Asset G", pG));
-
-		assets.add(new Asset("", "Asset F-2", pF));
-		assets.add(new Asset("", "Asset G-2", pG));
+//		assets.add(new Asset("", "Asset E", pE));
+//		assets.add(new Asset("", "Asset F", pF));
+//		assets.add(new Asset("", "Asset G", pG));
+//
+//		assets.add(new Asset("", "Asset F-2", pF));
+//		assets.add(new Asset("", "Asset G-2", pG));
 	
 		// Generate N random strategies by Monte Carlo Function 
-		List<Portfolio> listStrategies = Analysis.generateCombinationPortfolios(10000, assets);
+		List<Portfolio> listStrategies = Analysis.generateCombinationPortfolios(1000000, assets);
 //		
 		List<Portfolio> listMinimalRisk = new ArrayList<Portfolio>();
 //		
