@@ -115,7 +115,7 @@ public class AnalysisTest {
 //		assets.add(new Asset("", "Asset G-2", pG));
 	
 		// Generate N random strategies by Monte Carlo Function 
-		List<Portfolio> listStrategies = Analysis.generateCombinationPortfolios(1000000, assets);
+		List<Portfolio> listStrategies = Analysis.generateCombinationPortfolios(10000, assets);
 //		
 		List<Portfolio> listMinimalRisk = new ArrayList<Portfolio>();
 //		
@@ -158,7 +158,7 @@ public class AnalysisTest {
 			System.out.print(p);
 		}
 		
-		//System.out.println("RiskMin = "+pMinRisk);
+	//	System.out.println("RiskMin = "+pMinRisk);
 		
 	}
 	

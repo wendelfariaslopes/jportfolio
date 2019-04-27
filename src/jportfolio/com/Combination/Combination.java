@@ -30,60 +30,60 @@ public class Combination {
 		//int time = binomial(30,15).intValue() /day;
 		//System.out.println(time);
 		
-//		double[] pA = {1,2,3,4,5,6,7,8,9,10};
-//		
-//		double[] pB = {1,3,4,4,5,6,5,6,9,11};
-//		
-//		double[] pC = {1.01, 1.10, 1.20, 1.40, 1.70, 1.90, 1.95, 2.05, 2.04, 2.06, 2.16, 2.37};
-//		
-//		double[] pD = {2.01, 2.210, 3.20, 3.40, 3.70, 1.90, 1.95, 2.05, 2.04, 2.26, 2.36, 2.07};
-//
-//		double[] pE = {1.01, 1.02, 1.02, 1.02, 1.04, 1.05, 1.04, 1.05,1.04, 1.06, 1.06, 1.07};
+		double[] pA = {1,2,3,4,5,6,7,8,9,10};
+		
+		double[] pB = {1,3,4,4,5,6,5,6,9,11};
+		
+		double[] pC = {1.01, 1.10, 1.20, 1.40, 1.70, 1.90, 1.95, 2.05, 2.04, 2.06, 2.16, 2.37};
+		
+		double[] pD = {2.01, 2.210, 3.20, 3.40, 3.70, 1.90, 1.95, 2.05, 2.04, 2.26, 2.36, 2.07};
+
+		double[] pE = {1.01, 1.02, 1.02, 1.02, 1.04, 1.05, 1.04, 1.05,1.04, 1.06, 1.06, 1.07};
 		
 		//List<Portfolio> list = a.generateCombinationPortfolios(10000,pA,pB,pC);
 
-		Calendar from = Calendar.getInstance();
-		Calendar to = Calendar.getInstance();
-		from.add(Calendar.MONTH, -1); // from 1 month ago
-		
-		String[] symbols = new String[] {"INTC", "BABA", "TSLA", "AIR.PA", "YHOO","GOOG","ZAA"};
-		Map<String, Stock> stocks = YahooFinance.get(symbols); // single request
-		Stock intel = stocks.get("INTC");
-		Stock google = stocks.get("GOOG"); 
-		Stock tesla = stocks.get("TSLA");
-
-		List<HistoricalQuote> listIntel = intel.getHistory(from, to, Interval.DAILY);
-		List<HistoricalQuote> listGoogle = google.getHistory(from, to, Interval.DAILY);
-		List<HistoricalQuote> listTesla = tesla.getHistory(from, to, Interval.DAILY);
-		
-
-		ArrayList<Asset> assets = new ArrayList<Asset>();
-		double[] priceGoogle = new double[listGoogle.size()];
-		double[] priceIntel = new double[listIntel.size()];
-		double[] priceTesla = new double[listTesla.size()];
-
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		for (int i=0;i<listGoogle.size();i++) {
-			if(sdf.format(listGoogle.get(i).getDate().getTime()).equals(sdf.format(listIntel.get(i).getDate().getTime()))) {
-
-				priceGoogle[i]=listGoogle.get(i).getClose().doubleValue();
-				priceTesla[i]=listTesla.get(i).getClose().doubleValue();
-				priceIntel[i]=listIntel.get(i).getClose().doubleValue();
-			
-			}
-		}
+//		Calendar from = Calendar.getInstance();
+//		Calendar to = Calendar.getInstance();
+//		from.add(Calendar.MONTH, -1); // from 1 month ago
 //		
-		assets.add(new Asset("", "GOOGLE", priceGoogle));
-		assets.add(new Asset("", "INTEL", priceIntel));
-		assets.add(new Asset("", "TESLA", priceTesla));
-		
-		
+//		String[] symbols = new String[] {"INTC", "BABA", "TSLA", "AIR.PA", "YHOO","GOOG","ZAA"};
+//		Map<String, Stock> stocks = YahooFinance.get(symbols); // single request
+//		Stock intel = stocks.get("INTC");
+//		Stock google = stocks.get("GOOG"); 
+//		Stock tesla = stocks.get("TSLA");
+//
+//		List<HistoricalQuote> listIntel = intel.getHistory(from, to, Interval.DAILY);
+//		List<HistoricalQuote> listGoogle = google.getHistory(from, to, Interval.DAILY);
+//		List<HistoricalQuote> listTesla = tesla.getHistory(from, to, Interval.DAILY);
+//		
+//
 //		ArrayList<Asset> assets = new ArrayList<Asset>();
-//		assets.add(new Asset("", "Asset A", pA));
-//		assets.add(new Asset("", "Asset B", pB));
-//		assets.add(new Asset("", "Asset C", pC));
-//		assets.add(new Asset("", "Asset D", pD));
+//		double[] priceGoogle = new double[listGoogle.size()];
+//		double[] priceIntel = new double[listIntel.size()];
+//		double[] priceTesla = new double[listTesla.size()];
+//
+//
+//		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+//		for (int i=0;i<listGoogle.size();i++) {
+//			if(sdf.format(listGoogle.get(i).getDate().getTime()).equals(sdf.format(listIntel.get(i).getDate().getTime()))) {
+//
+//				priceGoogle[i]=listGoogle.get(i).getClose().doubleValue();
+//				priceTesla[i]=listTesla.get(i).getClose().doubleValue();
+//				priceIntel[i]=listIntel.get(i).getClose().doubleValue();
+//			
+//			}
+//		}
+//		
+//		assets.add(new Asset("", "GOOGLE", priceGoogle));
+//		assets.add(new Asset("", "INTEL", priceIntel));
+//		assets.add(new Asset("", "TESLA", priceTesla));
+		
+		
+		ArrayList<Asset> assets = new ArrayList<Asset>();
+		assets.add(new Asset("", "Asset A", pA));
+		assets.add(new Asset("", "Asset B", pB));
+		assets.add(new Asset("", "Asset C", pC));
+		assets.add(new Asset("", "Asset D", pD));
 //		assets.add(new Asset("", "Asset E", pE));
 //		assets.add(new Asset("", "Asset G", pG));
 //		assets.add(new Asset("", "Asset G1", pG1));
@@ -129,7 +129,7 @@ public class Combination {
 		
 		for(ArrayList<Asset> element : list) {
 			int n = element.size();
-			//System.out.println("Assets number: "+ n);
+			System.out.println("Assets number: "+ n);
 			if(n >= 2) {
 
 			    System.out.print("Group {");
